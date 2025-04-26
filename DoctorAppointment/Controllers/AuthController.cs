@@ -92,7 +92,8 @@ namespace DoctorAppointment.Controllers
                 Subject = new ClaimsIdentity(new Claim[]
                 {
             new Claim(ClaimTypes.Name, user.UserId.ToString()),
-            new Claim(ClaimTypes.Role, user.Role.ToString()) // Add role as claim (0, 1, or 2)
+            new Claim(ClaimTypes.Role, Enum.GetName(typeof(UserRole), user.Role) ?? string.Empty)
+
                 }),
                 Expires = DateTime.UtcNow.AddHours(1), // Token expiration time (1 hour)
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

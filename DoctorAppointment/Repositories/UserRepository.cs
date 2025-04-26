@@ -95,8 +95,9 @@ namespace DoctorAppointment.Repositories
                 throw new Exception("User not found");
             }
 
-            // Update the existing tracked entity
-            _context.Entry(existingUser).CurrentValues.SetValues(user);
+            existingUser.FirstName = user.FirstName ?? existingUser.FirstName;
+            existingUser.LastName = user.LastName ?? existingUser.LastName;
+            existingUser.ProfilePictureUrl = user.LastName ?? existingUser.ProfilePictureUrl;
 
             await _context.SaveChangesAsync();
 

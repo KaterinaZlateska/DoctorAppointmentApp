@@ -19,8 +19,8 @@ namespace DoctorAppointment.Controllers
         }
 
         [HttpGet]
-        // [Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        //[AllowAnonymous]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();
@@ -28,8 +28,8 @@ namespace DoctorAppointment.Controllers
         }
 
         [HttpGet("{id}")]
-        //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        // [AllowAnonymous]
         public async Task<IActionResult> GetUserById(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -40,8 +40,8 @@ namespace DoctorAppointment.Controllers
         }
 
         [HttpGet("email/{email}")]
-        // [Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        // [AllowAnonymous]
 
         public async Task<IActionResult> GetUserByEmail(string email)
         {
@@ -54,8 +54,8 @@ namespace DoctorAppointment.Controllers
 
         // Get all users by a specific role (doctor, patient, admin)
         [HttpGet("role/{role}")]
-        // [Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        // [AllowAnonymous]
         public async Task<IActionResult> GetUsersByRole(UserRole role)
         {
             var users = await _userService.GetUsersByRoleAsync(role);
@@ -65,8 +65,8 @@ namespace DoctorAppointment.Controllers
 
         // Assign a role (doctor, patient, admin) to a user
         [HttpPost("{id}/role/{role}")]
-        //  [Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        // [AllowAnonymous]
         public async Task<IActionResult> AssignRoleToUser(int id, UserRole role)
         {
             if (!Enum.IsDefined(typeof(UserRole), role)) // Check if the role is valid
@@ -81,8 +81,8 @@ namespace DoctorAppointment.Controllers
 
         // Set a doctor's availability (true/false)
         [HttpPut("{id}/availability")]
-        //  [Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        // [AllowAnonymous]
         public async Task<IActionResult> SetDoctorAvailability(int id, [FromQuery] bool isAvailable)
         {
             var success = await _userService.SetDoctorAvailabilityAsync(id, isAvailable);
@@ -93,8 +93,8 @@ namespace DoctorAppointment.Controllers
         }
 
         [HttpPut("{id}")]
-        //   [Authorize]
-        [AllowAnonymous]
+        [Authorize]
+        //  [AllowAnonymous]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
         {
             // Ensure the user is updating their own profile (or an admin is updating someone else's profile)
@@ -122,8 +122,8 @@ namespace DoctorAppointment.Controllers
         }
 
         [HttpDelete("{id}")]
-        //   [Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        //  [AllowAnonymous]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var success = await _userService.DeleteUserAsync(id);

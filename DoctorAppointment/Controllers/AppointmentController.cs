@@ -17,8 +17,8 @@ namespace DoctorAppointment.Controllers
         }
 
         [HttpGet]
-        //   [Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        //[AllowAnonymous]
         public async Task<IActionResult> GetAllAppointments()
         {
             var appointments = await _appointmentService.GetAllAppointmentsAsync();
@@ -26,8 +26,8 @@ namespace DoctorAppointment.Controllers
         }
 
         [HttpGet("{id}")]
-        // [Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
+        // [AllowAnonymous]
         public async Task<IActionResult> GetAppointmentById(int id)
         {
             var appointment = await _appointmentService.GetAppointmentByIdAsync(id);
@@ -37,8 +37,8 @@ namespace DoctorAppointment.Controllers
         }
 
         [HttpGet("doctor/{doctorId}")]
-        //   [Authorize(Roles = "Doctor")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Doctor")]
+        // [AllowAnonymous]
         public async Task<IActionResult> GetAppointmentsByDoctor(int doctorId)
         {
             var appointments = await _appointmentService.GetAppointmentsByDoctorAsync(doctorId);
@@ -46,8 +46,8 @@ namespace DoctorAppointment.Controllers
         }
 
         [HttpGet("patient/{patientId}")]
-        // [Authorize(Roles = "Patient")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Patient")]
+        // [AllowAnonymous]
         public async Task<IActionResult> GetAppointmentsByPatient(int patientId)
         {
             var appointments = await _appointmentService.GetAppointmentsByPatientAsync(patientId);
@@ -55,8 +55,8 @@ namespace DoctorAppointment.Controllers
         }
 
         [HttpPost]
-        // [Authorize(Roles = "Doctor")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Doctor")]
+        // [AllowAnonymous]
         public async Task<IActionResult> CreateAppointment([FromBody] Appointment appointment)
         {
             if (!ModelState.IsValid) return BadRequest("Invalid appointment data.");
@@ -66,8 +66,8 @@ namespace DoctorAppointment.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Authorize(Roles = "Admin, Doctor")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin, Doctor")]
+        // [AllowAnonymous]
         public async Task<IActionResult> UpdateAppointment(int id, [FromBody] Appointment appointment)
         {
             if (id != appointment.AppointmentId) return BadRequest("Appointment ID mismatch.");
@@ -77,8 +77,8 @@ namespace DoctorAppointment.Controllers
         }
 
         [HttpDelete("{id}")]
-        //  [Authorize(Roles = "Admin, Doctor")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin, Doctor")]
+        //  [AllowAnonymous]
         public async Task<IActionResult> DeleteAppointment(int id)
         {
             var result = await _appointmentService.DeleteAppointmentAsync(id);
